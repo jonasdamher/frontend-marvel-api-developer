@@ -3,15 +3,21 @@
     
     <div id="list-comics">
 
-      <div class="card shadow-sm" v-for="comic in comics" :key="comic.id">
-        <router-link :to="'/comics/details/' + comic.id">
-          <img class="img-comics" :src="comic.thumbnail.path+'.'+comic.thumbnail.extension" alt="comic" />
+      <div class="card" v-for="comic in comics" :key="comic.id">
+        <router-link v-if="comic" :to="'/comics/details/' + comic.id">
+          <img class="img-comics shadow-sm" :src="comic.thumbnail.path+'.'+comic.thumbnail.extension" alt="comic" />
         </router-link>
         <div class="card-body">
           <router-link :to="'/comics/details/' + comic.id">{{comic.variantDescription?comic.variantDescription:comic.title}}</router-link>
         </div>
       </div>
 
+      <div class="card shadow-sm" v-if="error">
+        <div class="card-body">
+          <p>{{error}}</p>
+        </div>
+      </div>
+      
     </div>
 
     <pagination :pageParams="pageParams"/>
@@ -30,13 +36,14 @@ export default {
   },
   data(){
     return {
+      error:'',
       comics: [],
       pageParams: {total:0,page:0}
     }
   },
   props:{
-    params: {type:Object,required:true},
-    api: {type:Object,required:true}
+    params: {type:Object},
+    api: {type:Object}
   },
   methods:{
     getComics(){
@@ -51,7 +58,7 @@ export default {
         this.pageParams.page = this.params.page;
       })
       .catch(err =>{
-        this.comics=err;
+        this.error=err;
       });
     }
   },
@@ -73,41 +80,6 @@ export default {
 <style scoped>
 #home{
   width: 100%;
-}
-
-#list-comics{
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.card{
-  margin: .5rem;
-  max-width: 300px;
-  height: 100%;
-  border-radius: .15rem;
-  background-color: #ffffff;
-}
-
-.img-comics{
-  width: 100%;
-  border-top-left-radius: .15rem;
-  border-top-right-radius: .15rem;
-}
-
-.card-body{
-  padding: 1rem;
-  text-align: center;
-}
-
-.card-body a{
-  text-decoration: none;
-  color:rgb(58, 58, 58);
-  font-weight: bold;
-}
-
-.card-body a:hover{
-  color:rgb(114, 114, 114);
 }
 
 </style>

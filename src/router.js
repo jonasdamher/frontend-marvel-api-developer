@@ -16,12 +16,12 @@ export default new Router({
     },
     {
       path: '/comics/details/:id',
-      name: 'details',
+      name: 'details/',
       component: Details
     },
     {
       path: '/creators/:id',
-      name: 'creators',
+      name: 'creators/',
       component: Creators
     }
   ]

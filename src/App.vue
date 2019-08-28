@@ -26,12 +26,11 @@ export default {
     getParams(){
       let {page,limit} = this.$route.query;
       this.params.page = page?page:1;
-      this.params.limit = limit?limit:5;
+      this.params.limit = limit?limit:10;
       this.params.offset = (this.params.page-1) * this.params.limit;
     },
     getApi(){
       var api = keys;
-
       const time = Date.now();
       const hash = md5(time+api.privateKey+api.publicKey);
       api.time = time;
@@ -63,7 +62,7 @@ export default {
 }
 
 body{
-  background-color: rgb(241, 241, 241);
+  background-color: #ecf0f1;
 }
 
 #app {
@@ -76,7 +75,7 @@ body{
 }
 
 .container{
-  padding: 2rem;
+  padding: 0;
   width: 100%;
 }
 
@@ -86,5 +85,41 @@ body{
 
 .shadow{
   box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+#list-comics{
+  width: 100%;
+  height: 1200px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-content: space-between;
+  align-items: flex-start;
+}
+
+#list-comics .card{
+  margin: 1%;
+  width: 18%;
+  height: auto;
+}
+
+.img-comics{
+    border-radius: .15rem;
+    width: 100%;
+}
+
+.card-body{
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.card-body a{
+  text-decoration: none;
+  color:rgb(58, 58, 58);
+  font-weight: bold;
+}
+
+.card-body a:hover{
+  color:rgb(114, 114, 114);
 }
 </style>

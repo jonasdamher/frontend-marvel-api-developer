@@ -3,26 +3,23 @@
     
     <h1>{{creator.fullName}}</h1>
     <img class="img-comics" :src="creator.thumbnail.path+'.'+creator.thumbnail.extension" alt="creator" />
-    <a :href="creator.urls[0].url" target="blank">Detalles sobre {{creator.fullName}}</a>
     
-    <p>Comics</p>
+    <h2>Comics</h2>
 
     <div id="list-comics">
-      <div class="card" v-for="comic in creator.comics.items" :key="comic.name">
+      <div class="card shadow-sm" v-for="comic in creator.comics.items" :key="comic.name">
         <div class="card-body">
-          <router-link :to="'/comics/' + comic.resourceURI.split('/')[6]">{{comic.name}}</router-link>
+          <router-link :to="'/comics/details/' + comic.resourceURI.split('/')[6]">{{comic.name}}</router-link>
         </div>
       </div>
     </div>
+    <a :href="creator.urls[0].url" target="blank">Detalles sobre {{creator.fullName}}</a>
 
   </div>
 </template>
 
 
 <script>
-import { scrypt } from 'crypto';
-const md5 = require('js-md5');
-
 export default {
   name: 'general',
   data(){
@@ -30,28 +27,19 @@ export default {
       creator:[]
     }
   },
-  created(){
-    
-    let id = this.$route.params.id;
+  props:{
+    api: {type:Object}
+  },
+  mounted(){
 
-    const api = {
-      publicKey: '6f21f91bae9af1c91346291267b2fe79',
-      privateKey: '93093ddfbf7a57dc2e5494e46f43a6f0e6de98bd'
-    }
-
-    var time = Date.now();
-
-    const hash = md5(time+api.privateKey+api.publicKey);
-    const url = 'http://gateway.marvel.com/v1/public/creators/'+id+'?ts='+time+'&apikey='+api.publicKey+'&hash='+hash;
+    const url = 'http://gateway.marvel.com/v1/public/creators/'+this.$route.params.id+'?ts='+this.api.time+'&apikey='+this.api.publicKey+'&hash='+this.api.hash;
     
     this.axios.get(url)
     .then(res =>{
-      let resultado = res.data.data.results[0];
-      this.creator=resultado;
-      console.log(resultado);
+      this.creator = res.data.data.results[0];
     })
     .catch(err =>{
-      console.log(err);
+      this.creator = resultado;
     });
   }
 }

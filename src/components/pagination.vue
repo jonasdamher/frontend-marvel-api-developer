@@ -5,11 +5,11 @@
         <router-link :to="'/?page='+paginacion.numero" class="shadow-sm" :disabled="paginacion.status" :class="{active: paginacion.numero==page && typeof paginacion.texto != 'string'}">{{paginacion.texto}}</router-link>
       </li>
     </ul>
+    <p class="text-right">Páginas encontradas: {{pageParams.total}}</p>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'pagination',
   data(){
@@ -22,20 +22,18 @@ export default {
   },
   computed:{
     pagination(){
-      
       this.page = this.pageParams.page;
       let page = --this.pageParams.page;
 
       var resultados = [];
 
-      resultados.push({numero:1,texto:'<<'});
-
       if(page==0){
-        resultados.push({numero:++page,texto:page});
+        resultados.push({numero:++page,texto:'<<'});
+        resultados.push({numero:page,texto:page});
         
       }else if(page>0){
+        resultados.push({numero:page,texto:'<<'});
         resultados.push({numero:page,texto:page});
-
       }
 
       for (let i = 0; i < 2; i++) {
@@ -46,12 +44,8 @@ export default {
         }
       }
 
-      if(this.pageParams.total==this.page){
-        resultados.push({numero:this.pageParams.total,texto:'>>',status:true});
-      }else{
-        resultados.push({numero:this.pageParams.total,texto:'>>',status:false});
+      resultados.push({numero:page,texto:'>>',status:false});
 
-      }
       return resultados;
     }
   }
@@ -67,8 +61,7 @@ export default {
   list-style: none;
 }
 
-
-#pagination ul li:disabled {
+#pagination ul li a:disabled {
   background-color: rgb(182, 182, 182);
 }
 
@@ -76,12 +69,10 @@ export default {
   margin: 0.5rem;
   display: block;
   background-color: #fff;
-  border:0;
-  outline: 0;
 }
 
 #pagination ul li:hover{
-  background-color: rgb(240, 239, 239);
+  background-color: #5eddc4;
 }
 
 #pagination ul li a{
@@ -90,10 +81,11 @@ export default {
   color: #222;
   font-weight: bold;
   display: block;
+  border-radius: .15rem;
 }
 
 #pagination ul li .active{
-  background-color: rgb(73, 95, 95);
+  background-color: #1abc9c;
 }
 
 #pagination ul li .active {
@@ -101,6 +93,11 @@ export default {
 }
 
 #pagination ul li .active:hover{
-  background-color: rgb(93, 122, 122);
+  background-color: #16a085;
 }
+
+.text-right{
+  text-align: right;
+}
+
 </style>
