@@ -26,7 +26,7 @@ export default {
     getParams(){
       let {page,limit} = this.$route.query;
       this.params.page = page?page:1;
-      this.params.limit = limit?limit:10;
+      this.params.limit = limit?limit:20;
       this.params.offset = (this.params.page-1) * this.params.limit;
     },
     getApi(){
@@ -61,6 +61,11 @@ export default {
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: VarelaRoundRegular;
+  src: url('assets/fonts/VarelaRound-Regular.ttf');
+}
+
 body{
   background-color: #ecf0f1;
 }
@@ -69,13 +74,13 @@ body{
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
+  color: #222;
   display: flex;
   flex-direction: column;
 }
 
 .container{
-  padding: 0;
+  padding: 2rem;
   width: 100%;
 }
 
@@ -89,18 +94,21 @@ body{
 
 #list-comics{
   width: 100%;
-  height: 1200px;
+  height: 1124px;
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   align-content: space-between;
-  align-items: flex-start;
 }
 
 #list-comics .card{
-  margin: 1%;
-  width: 18%;
+  width: 13%;
   height: auto;
+}
+
+.card-content-img{
+  display: block;
+  position: relative;
 }
 
 .img-comics{
@@ -109,17 +117,81 @@ body{
 }
 
 .card-body{
-  padding: 0.75rem;
+  padding: 1rem;
   text-align: center;
 }
 
 .card-body a{
   text-decoration: none;
-  color:rgb(58, 58, 58);
+  color: #222;
   font-weight: bold;
+  font-family: VarelaRoundRegular;
 }
 
 .card-body a:hover{
   color:rgb(114, 114, 114);
+}
+
+@media (max-width: 1440px) {
+  #list-comics{
+    height: 1000px;
+  }
+  #list-comics .card{
+    width: 12%;
+  }
+}
+
+@media (max-width: 1024px) {
+  #list-comics{
+    height: 1420px;
+  }
+
+  #list-comics .card{
+    width: 18%;
+  }
+}
+
+@media (max-width: 768px) {
+  #list-comics{
+    height: 1743px;
+  }
+
+  #list-comics .card{
+    width: 23%;
+  }
+}
+
+@media (max-width: 425px) {
+  #list-comics{
+    height: auto;
+  }
+
+  #list-comics .card{
+    width: 100%;
+  }
+}
+
+.card-fade:hover .bg-fade{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top:0;
+  bottom: 3px;
+  background-color: rgba(34, 34, 34, 0.185);
+  border-radius: .15rem;
+  transition: .5s;
+}
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparents; 
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #555555; 
 }
 </style>

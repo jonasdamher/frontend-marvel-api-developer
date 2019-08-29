@@ -1,25 +1,25 @@
 <template>
-  <div class="content">
+  <div id="Details">
     <span class="number-comic" v-if="comic.issueNumber">nº {{comic.issueNumber}}</span> 
     <div class="main-content">
-      <img class="img-comic" :src="comic.thumbnail.path+'.'+comic.thumbnail.extension" alt="comic" />
+      <img class="img-comic" :src="comic.image" alt="Comic" />
       <div class="card content-text shadow-sm">
         <div class="card-body">
           <h1 class="h1">{{comic.variantDescription?comic.variantDescription:comic.title}}</h1>
           <p class="f-start-self">{{comic.description}}</p> 
-          <a class="f-start-self" :href="comic.urls[0].url" target="blank">Detalles en la página oficial</a>
-          <div class="f-start-self" v-if="comic.characters.items.length > 0">
+          <a class="f-start-self" :href="comic.urlOficial" target="blank">Detalles en la página oficial</a>
+          <div class="f-start-self" v-if="characters.length>0">
             <p>Personajes</p>
             <ul>
-              <li v-for="character in comic.characters.items" :key="character.name">
+              <li v-for="character in characters" :key="character.name">
                 <router-link :to="'/characters/' +character.resourceURI.split('/')[6]">{{character.name}}</router-link>
               </li>
             </ul>
           </div>
-          <div class="f-start-self" v-if="comic.creators.items.length > 0">
+          <div class="f-start-self" v-if="creators.length>0">
             <p>Creadores</p>
             <ul>
-              <li v-for="creator in comic.creators.items" :key="creator.name">
+              <li v-for="creator in creators" :key="creator.name">
                 <router-link :to="'/creators/' +creator.resourceURI.split('/')[6]">{{creator.name}} -- Rol : {{creator.role}}</router-link>
               </li>
             </ul>
@@ -39,10 +39,12 @@
 <script>
 
 export default {
-  name: 'details',
+  name: 'Details',
   data(){
     return {
       comic:[],
+      characters:[],
+      creators:[],
       error:''
     }
   },
@@ -56,6 +58,11 @@ export default {
     this.axios.get(url)
     .then(res =>{
       this.comic = res.data.data.results[0];
+      console.log(this.comic);
+      this.creators = this.comic.creators.items;
+      this.characters = this.comic.characters.items;
+      this.comic.urlOficial = this.comic.urls[0].url;
+      this.comic.image = this.comic.thumbnail.path+'.'+this.comic.thumbnail.extension
     })
     .catch(err =>{
       this.error = err;

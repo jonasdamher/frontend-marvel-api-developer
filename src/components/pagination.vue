@@ -2,10 +2,9 @@
   <div id="pagination">
     <ul>
       <li v-for="paginacion in pagination" :key="paginacion.texto">
-        <router-link :to="'/?page='+paginacion.numero" class="shadow-sm" :disabled="paginacion.status" :class="{active: paginacion.numero==page && typeof paginacion.texto != 'string'}">{{paginacion.texto}}</router-link>
+        <router-link :to="pageParams.url+'/?page='+paginacion.numero" class="shadow-sm" :disabled="paginacion.status" :class="{active: paginacion.numero==page && typeof paginacion.texto != 'string'}">{{paginacion.texto}}</router-link>
       </li>
     </ul>
-    <p class="text-right">Páginas encontradas: {{pageParams.total}}</p>
   </div>
 </template>
 
@@ -57,7 +56,7 @@ export default {
 
 #pagination ul{
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   list-style: none;
 }
 
@@ -72,32 +71,26 @@ export default {
 }
 
 #pagination ul li:hover{
-  background-color: #5eddc4;
+  background-color: rgb(212, 212, 212);
 }
 
 #pagination ul li a{
   padding: 1rem 1.5rem;
+  display: block;
+  border-radius: .15rem;
   text-decoration: none;
   color: #222;
   font-weight: bold;
-  display: block;
-  border-radius: .15rem;
+  font-family: VarelaRoundRegular;
 }
 
 #pagination ul li .active{
-  background-color: #1abc9c;
-}
-
-#pagination ul li .active {
-  color:#fff;
+  background-color: #212121;
+  color: #fff;
 }
 
 #pagination ul li .active:hover{
-  background-color: #16a085;
-}
-
-.text-right{
-  text-align: right;
+  background-color: #424242;
 }
 
 </style>
