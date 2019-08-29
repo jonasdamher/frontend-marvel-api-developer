@@ -3,11 +3,11 @@
     <div class="nav-navbar">
       <div class="nav-list">
         <div class="brand">
-          <router-link :to="'/'"><span>Vira</span>Comics</router-link>
+          <router-link :to="'/'" exact><span>Vira</span>Comics</router-link>
         </div>
         <ul>
           <li>
-            <router-link :to="'/'">Comics</router-link>
+            <router-link :to="'/'" exact>Comics</router-link>
           </li>
           <li>
             <router-link :to="'/characters'">Personajes</router-link>
